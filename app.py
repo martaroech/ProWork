@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-import mysql.connector
+import mariadb
 import bcrypt
 
 app = Flask(__name__)
@@ -8,11 +8,11 @@ app.secret_key = os.getenv('SECRET_KEY', b'\xe6\x05\xe6q;[$\xcd\xe6\xa8n\xab\x1e
 
 # Connessione al database MySQL / MariaDB
 def connect_to_db():
-    return mysql.connector.connect(
+    return mariadb(
         host='127.0.0.1',
         database='proworkdb',
         user='root',
-        password='LucaMartari',
+        password='12345',
         charset='utf8mb4'
     )
 
