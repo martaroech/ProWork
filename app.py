@@ -107,58 +107,43 @@ def register():
 
     return render_template('register.html')
 
-# Menu utente
-@app.route('/user_menu')
+@app.route('/user_menu', methods=['GET', 'POST'])
 def user_menu():
     if 'username' in session:
         conn = connect_to_db()
         cur = conn.cursor()
 
-        # Recupera tutte le aziende dal database senza filtro
-        query = """
-        SELECT nome, settore, localita, immagine
-        FROM azienda
-        """
-        cur.execute(query)
-        aziende = cur.fetchall()
-
-        # Debug: Stampa le aziende recuperate
-        print("Aziende recuperate dal database:", aziende)
+        # Se c'è una richiesta POST, esegui la ricerca
+        if request.method == 'POST':
+            search_query = request.form['search_query']
+            query = """
+            SELECT nome, settore, localita, immagine
+            FROM azienda
+            WHERE nome LIKE %s
+            """
+            cur.execute(query, ('%' + search_query + '%',))
+            aziende = cur.fetchall()
+            flash(f"Risultati della ricerca per: {search_query}", 'info')
+        else:
+            # Recupera tutte le aziende se non ci sono ricerche
+            query = """
+            SELECT nome, settore, localita, immagine
+            FROM azienda
+            """
+            cur.execute(query)
+            aziende = cur.fetchall()
 
         cur.close()
         conn.close()
 
         # Se non ci sono aziende, possiamo passare un messaggio di errore
         if not aziende:
-            flash('Nessuna azienda trovata nel database.', 'danger')
+            flash('Nessuna azienda trovata.', 'danger')
 
         # Passiamo le aziende e il nome utente alla pagina HTML
         return render_template('user_menu.html', username=session['username'], aziende=aziende)
     else:
         return redirect(url_for('home'))
-    
-@app.route('/search_azienda', methods=['POST'])
-def search_azienda():
-    search_query = request.form['search_query']
-    
-    conn = connect_to_db()
-    cur = conn.cursor()
-
-    # Ricerca nel database le aziende che contengono il testo inserito, inclusa la colonna immagine
-    query = """
-    SELECT nome, settore, localita
-    FROM azienda
-    WHERE nome LIKE %s
-    """
-
-    cur.execute(query, ('%' + search_query + '%',))
-    results = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    # Passiamo i risultati e il valore di ricerca alla pagina user_menu.html
-    return render_template('user_menu.html', aziende=results, search_query=search_query)
 
 # Menu admin
 @app.route('/admin_menu')
