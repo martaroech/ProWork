@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ azienda[1] }} | Visualizza recensioni</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Stili personalizzati -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <a href="{{ url_for('user_menu') }}" class="back-link">
+            <button class="back-button"><img src="{{ url_for('static', filename='resources/icons/back-icon.png') }}" alt="Indietro" class="back-icon"></button>
+        </a>
+        <img src="{{ url_for('static', filename='resources/ProWork.png') }}" alt="Logo" style="width: 200px;">
+        <a href="{{ url_for('logout') }}" class="logout-link">
+            <button class="logout-button"><img src="{{ url_for('static', filename='resources/icons/logout-icon.png') }}" alt="Logout" class="logout-icon"></button>
+        </a>
+    </div>
+
+    <div class="azienda-dettagli-container col-8 mx-auto">
+        <div class="img-container" style="width: 100%;">
+            <img src="{{ url_for('static', filename='resources/' + (azienda[4] if azienda[4] else 'default-img.webp')) }}" alt="img_azienda" class="img-azienda">
+        </div>
+        <h1>{{ azienda[1] }}</h1>
+        <div><strong>Località:</strong> {{ azienda[3] }}</div>
+        <div><strong>Descrizione:</strong> {{ azienda[4] }}</div>
+    </div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

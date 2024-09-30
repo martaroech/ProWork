@@ -117,7 +117,7 @@ def user_menu():
         if request.method == 'POST':
             search_query = request.form['search_query']
             query = """
-            SELECT nome, settore, localita, immagine
+            SELECT id, nome, settore, localita, immagine
             FROM azienda
             WHERE nome LIKE %s
             """
@@ -127,7 +127,7 @@ def user_menu():
         else:
             # Recupera tutte le aziende se non ci sono ricerche
             query = """
-            SELECT nome, settore, localita, immagine
+            SELECT id, nome, settore, localita, immagine
             FROM azienda
             """
             cur.execute(query)
@@ -144,6 +144,31 @@ def user_menu():
         return render_template('user_menu.html', username=session['username'], aziende=aziende)
     else:
         return redirect(url_for('home'))
+    
+@app.route('/azienda/<int:azienda_id>')
+def azienda_details(azienda_id):
+    conn = connect_to_db()
+    cur = conn.cursor()
+
+    # Recupera i dettagli dell'azienda basati sull'id
+    query = """
+    SELECT id, nome, settore, localita, descrizione, valutazione, immagine
+    FROM azienda
+    WHERE id = %s
+    """
+    cur.execute(query, (azienda_id,))
+    azienda = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    # Se l'azienda non esiste, rimanda alla pagina principale con un messaggio di errore
+    if not azienda:
+        flash("Azienda non trovata.", "danger")
+        return redirect(url_for('user_menu'))
+
+    # Passa i dettagli dell'azienda alla pagina azienda.html
+    return render_template('azienda.html', azienda=azienda)
 
 # Menu admin
 @app.route('/admin_menu')

@@ -104,6 +104,30 @@ h2 {
     height: 80px;
 }
 
+.back-link {
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.back-icon {
+    width: 40px;
+    text-align: left;
+}
+
 .logout-link {
     cursor: pointer;
     padding: 0;
@@ -171,8 +195,10 @@ h2 {
     margin-top: 40px;
 }
 
-.card-azienda {
+.card-azienda-link {
+    text-decoration: none !important;
     display: flex;
+    flex-direction: row;
     background-color: #ffffff;
     width: 100%;
     height: 100px;
@@ -180,6 +206,10 @@ h2 {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     text-wrap: break-word;
+    margin-bottom: 1.25rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align: middle;
 }
 
 .img-container {
@@ -190,8 +220,8 @@ h2 {
     margin-right: 0 !important;
     height: 100%;
     border-radius: 15px;
-    object-fit: cover;
     margin-right: 15px;
+    justify-content: center;
     text-align: center;
 }
 
@@ -200,6 +230,8 @@ h2 {
     margin: auto;
     max-width: 80px;
     max-height: 80px;
+    justify-content: center;
+    text-align: center;
 }
 
 .container-info-azienda {
