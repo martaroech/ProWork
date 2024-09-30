@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-import mariadb
+import mysql.connector
 import bcrypt
 
 app = Flask(__name__)
@@ -8,11 +8,11 @@ app.secret_key = os.getenv('SECRET_KEY', b'\xe6\x05\xe6q;[$\xcd\xe6\xa8n\xab\x1e
 
 # Connessione al database MySQL / MariaDB
 def connect_to_db():
-    return mariadb(
+    return mysql.connector.connect(
         host='127.0.0.1',
         database='proworkdb',
         user='root',
-        password='12345',
+        password='LucaMartari',
         charset='utf8mb4'
     )
 
@@ -114,7 +114,7 @@ def user_menu():
         conn = connect_to_db()
         cur = conn.cursor()
 
-        # Recupera tutte le aziende dal database
+        # Recupera tutte le aziende dal database senza filtro
         query = """
         SELECT nome, settore, localita, immagine
         FROM azienda
@@ -167,6 +167,18 @@ def admin_menu():
         return render_template('admin_menu.html', username='admin')
     else:
         return redirect(url_for('home'))
+
+# Logout
+@app.route('/logout')
+def logout():
+    # Rimuove tutti i dati dalla sessione
+    session.clear()
+    # Flash message (opzionale)
+    flash('Logout effettuato con successo.', 'success')
+    # Reindirizza alla pagina di login
+    return redirect(url_for('home'))
+
+###########################################################
 
 if __name__ == '__main__':
     app.run(debug=True)

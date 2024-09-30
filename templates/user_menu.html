@@ -14,7 +14,9 @@
 <body>
     <div class="header">
         <img src="{{ url_for('static', filename='resources/ProWork.png') }}" alt="Logo" style="width: 200px;">
-        <button class="logout-button"><img src="{{ url_for('static', filename='resources/icons/logout-icon.png') }}" alt="User Icon" class="logout-icon"></button>
+        <a  href="{{ url_for('logout') }}" class="logout-link">
+            <button class="logout-button"><img src="{{ url_for('static', filename='resources/icons/logout-icon.png') }}" alt="User Icon" class="logout-icon"></button>
+        </a>
     </div>
     <div class="search-container col-8 mx-auto">
         <form action="{{ url_for('search_azienda') }}" method="POST">

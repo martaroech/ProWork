@@ -91,6 +91,7 @@ h2 {
 
 /* PAGINA USER_MENU */
 .header {
+    position: relative;
     top: 0;
     display: flex;
     justify-content: center;
@@ -100,6 +101,18 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     border-bottom: 1px solid #20b2aa;
+    height: 80px;
+}
+
+.logout-link {
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logout-button {
@@ -108,8 +121,6 @@ h2 {
     cursor: pointer;
     padding: 0;
     margin: 0;
-    position: absolute;
-    right: 1.25rem;
 }
 
 .logout-icon {
