@@ -1,0 +1,213 @@
+/* PAGINE LOGIN E REGISTER */
+
+/* Stile generale */
+body {
+    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Contenitore del form di login e registrazione */
+.login-container, .register-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 400px;
+    margin: 2rem auto;
+}
+
+/* Titoli */
+h2 {
+    color: #20b2aa;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Pulsanti */
+.btn-primary {
+    margin-top: 0.5rem;
+    background-color: #20b2aa;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #1e9e94;
+}
+
+.btn-secondary {
+    background-color: #f5f5f5;
+    color: #20b2aa;
+    border: 1px solid #20b2aa;
+    margin-top: 0.8rem;
+}
+
+.btn-secondary:hover {
+    background-color: #e0f5f5;
+    color: #1e9e94;
+}
+
+/* Etichette dei campi */
+.form-label {
+    color: #333;
+}
+
+/* Input form */
+.form-control {
+    border-radius: 10px;
+}
+
+/* Messaggi di errore */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Contenitore principale */
+.logo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+/* Link di registrazione e login */
+.register-link, .login-link {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+
+/*****************************************/
+
+
+/* PAGINA USER_MENU */
+.header {
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 1rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #20b2aa;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 1.25rem;
+}
+
+.logout-icon {
+    width: 40px;
+    text-align: right;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    padding: 10px 40px;
+    border-radius: 20px;
+    border: 1px solid #20b2aa;
+    font-size: 16px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    color: #333;
+    outline: none;
+}
+
+.search-input:focus {
+    outline: none !important;
+    border: 1.3px solid #1e9e94;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+}
+
+.aziende-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.card-azienda {
+    display: flex;
+    background-color: #ffffff;
+    width: 100%;
+    height: 100px;
+    border: 1px solid #20b2aa;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-wrap: break-word;
+}
+
+.img-container {
+    display: flex;
+    align-items: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    height: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-right: 15px;
+    text-align: center;
+}
+
+.img-azienda {
+    position: relative;
+    margin: auto;
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.container-info-azienda {
+    display: flex;
+    flex-direction: column;
+    color: #20b2aa;
+    text-wrap: break-word;
+    justify-content: center;
+}
+
+.titolo-azienda {
+    margin-bottom: 5px;
+    color: #1e9e94 !important;
+}
+
+.settore-azienda {
+    margin-bottom: 0 !important;
+}
+
+.localita-azienda {
+    margin-bottom: 0 !important;
+}
