@@ -115,7 +115,10 @@ def user_menu():
         cur = conn.cursor()
 
         # Recupera tutte le aziende dal database
-        query = "SELECT nome, settore, localita FROM azienda"
+        query = """
+        SELECT nome, settore, localita, immagine
+        FROM azienda
+        """
         cur.execute(query)
         aziende = cur.fetchall()
 
@@ -143,7 +146,7 @@ def search_azienda():
 
     # Ricerca nel database le aziende che contengono il testo inserito, inclusa la colonna immagine
     query = """
-    SELECT nome, settore, localita, immagine
+    SELECT nome, settore, localita
     FROM azienda
     WHERE nome LIKE %s
     """
