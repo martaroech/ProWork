@@ -117,7 +117,7 @@ def user_menu():
         if request.method == 'POST':
             search_query = request.form['search_query']
             query = """
-            SELECT id, nome, settore, localita, immagine
+            SELECT id, nome, settore, localita, immagine, valutazione
             FROM azienda
             WHERE nome LIKE %s
             """
@@ -127,7 +127,7 @@ def user_menu():
         else:
             # Recupera tutte le aziende se non ci sono ricerche
             query = """
-            SELECT id, nome, settore, localita, immagine
+            SELECT id, nome, settore, localita, immagine, valutazione
             FROM azienda
             """
             cur.execute(query)
@@ -152,7 +152,7 @@ def azienda_details(azienda_id):
 
     # Recupera i dettagli dell'azienda basati sull'id
     query = """
-    SELECT id, nome, settore, localita, descrizione, valutazione, immagine
+    SELECT id, nome, settore, localita, descrizione, valutazione, immagine, indirizzo
     FROM azienda
     WHERE id = %s
     """

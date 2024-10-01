@@ -22,13 +22,14 @@
         </a>
     </div>
 
-    <div class="azienda-dettagli-container col-8 mx-auto">
+    <div class="azienda-dettagli-container col-9 mx-auto">
         <div class="img-container" style="width: 100%;">
-            <img src="{{ url_for('static', filename='resources/' + (azienda[4] if azienda[4] else 'default-img.webp')) }}" alt="img_azienda" class="img-azienda">
+            <img src="{{ url_for('static', filename='resources/' + (azienda[6] if azienda[6] else 'default-img.webp')) }}" alt="img_azienda" class="azienda_img">
         </div>
-        <h1>{{ azienda[1] }}</h1>
-        <div><strong>Località:</strong> {{ azienda[3] }}</div>
-        <div><strong>Descrizione:</strong> {{ azienda[4] }}</div>
+        <h1 class="azienda-titolo"><strong>{{ azienda[1] }}</strong></h1>
+        <div class="azienda-descrizione">{{ azienda[4] }}</div>
+        <div class="azienda-indirizzo"><strong>Indirizzo: </strong>{{ azienda[2] }}</div>
+        <div class="azienda-localita"><strong>Località: </strong>{{ azienda[3] }}</div>
     </div>
 
 <!-- Bootstrap JS -->

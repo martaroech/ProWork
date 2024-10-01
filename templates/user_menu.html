@@ -45,13 +45,18 @@
         {% if aziende %}
             {% for azienda in aziende %}
                 <a href="{{ url_for('azienda_details', azienda_id=azienda[0]) }}" class="card-azienda-link">
-                    <div class="img-container" style="width: 120px;">
+                    <div class="img-container" style="width: 150px;">
                         <img src="{{ url_for('static', filename='resources/' + (azienda[4] if azienda[4] else 'default-img.webp')) }}" alt="img_azienda" class="img-azienda">
                     </div>
-                    <div class="container-info-azienda" style="width: auto;">
+                    <div class="container-info-azienda" style="position: relative;">
                         <h4 class="titolo-azienda"><strong>{{ azienda[1] }}</strong></h4>
                         <p class="settore-azienda">{{ azienda[2] }}</p>
                         <p class="localita-azienda">{{ azienda[3] }}</p>
+
+                        <div class="badge-valutazione">
+                            <img src="{{ url_for('static', filename='resources/icons/star-icon.png') }}" class="star-icon">
+                            {{ azienda[5] }}
+                        </div>
                     </div>
                 </a>
             {% endfor %}
