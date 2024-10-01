@@ -273,6 +273,10 @@ h2 {
 .titolo-azienda {
     margin-bottom: 5px;
     color: #1e9e94 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 70px);
 }
 
 .settore-azienda {
@@ -303,4 +307,17 @@ h2 {
 .azienda-descrizione {
     margin-bottom: 20px;
     text-align: justify;
+}
+
+
+/*****************************************/
+
+
+.azienda_img_dip {
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    margin-top: 20px;
 }

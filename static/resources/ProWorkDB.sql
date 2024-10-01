@@ -41,7 +41,7 @@ CREATE TABLE `azienda` (
 
 LOCK TABLES `azienda` WRITE;
 /*!40000 ALTER TABLE `azienda` DISABLE KEYS */;
-INSERT INTO `azienda` VALUES (1,'Innova Group','Cartotecnico','Erbè','Innova Group, situata a Erbè (VR), è un\'azienda leader nel packaging e nella cartotecnica. Offre soluzioni innovative e sostenibili, grazie a tecnologie avanzate e alla digitalizzazione dei processi, con un forte focus sull\'innovazione in ottica Industry 4.0.',3.9,'innova_group.png','Via della Libertà 6 – 37060 Erbè (VR)'),(2,'MOA Sport','Moda','Castel d\'Ario','',0,'moa.png',''),(3,'Fondazione EduLife','Istruzione','Verona','',0,'fondazione_edulife.png',''),(4,'Calzedonia','Abbigliamento','Dossobuono','',0,'calzedonia.png',''),(5,'Bauli','Alimentazione','Castel d\'Azzano','',0,'bauli.png',''),(6,'Fincantieri','Ingegneria','Valeggio sul Mincio','',0,'fincantieri.png',''),(7,'Veronesi','Alimentazione','San Martino Buon Albergo','',0,'veronesi.png',''),(8,'Zambon group','Farmaceutico','Verona','',0,'zambon_group.png',''),(9,'Todesco','Chimico','Caldiero','',0,'todesco.png',''),(10,'Gruppo Cattolica Assicurazioni','Assicurazioni','Verona','',0,'cattolica_assicurazioni.png',''),(11,'Technogym','Fitness','Verona','',0,'technogym.png',''),(12,'Zalando','Moda','Nogarole Rocca','',0,'zalando.png',''),(13,'AIA','Alimentare','San Martino Buon Albergo','',0,'aia.png',''),(14,'Mondadori','Editoria','Verona','',0,'mondadori.png',''),(15,'Pastificio Rana','Alimentare','San Giovanni Lupatoto','',0,'pastificio_rana.png','');
+INSERT INTO `azienda` VALUES (1,'Innova Group','Cartotecnico','Erbè','Innova Group, situata a Erbè (VR), è un\'azienda leader nel packaging e nella cartotecnica. Offre soluzioni innovative e sostenibili, grazie a tecnologie avanzate e alla digitalizzazione dei processi, con un forte focus sull\'innovazione in ottica Industry 4.0.',3.9,'innova_group.png','Via della Libertà 6 – 37060 Erbè (VR)'),(2,'MOA Sport','Moda','Castel d\'Ario','MOA Sport, fondata nel 1970 dai fratelli Claudio e Vincenzo Mantovani, è un leader internazionale nella produzione di abbigliamento tecnico per il ciclismo. Ogni capo viene ideato e prodotto interamente in Italia, seguendo un processo che va dalla scelta dei tessuti alla realizzazione finale. L\'azienda è famosa per la qualità artigianale e l\'innovazione tecnologica, collaborando con team professionistici di alto livello​.',0,'moa.png',''),(3,'Fondazione EduLife','Istruzione','Verona','Fondata nel 2010, la Fondazione EduLife si concentra sull\'educazione e la formazione attraverso esperienze trasformative, con l\'obiettivo di aiutare i giovani a sviluppare le loro competenze e scoprire la propria vocazione. Il progetto 311 Verona, creato dalla fondazione, è un hub innovativo che promuove il talento e l\'uso di tecnologie avanzate per preparare le persone alle sfide del futuro, con una particolare attenzione al benessere e allo sviluppo personale​.',0,'fondazione_edulife.png',''),(4,'Calzedonia','Abbigliamento','Dossobuono','',0,'calzedonia.png',''),(5,'Bauli','Alimentazione','Castel d\'Azzano','',0,'bauli.png',''),(6,'Fincantieri','Ingegneria','Valeggio sul Mincio','',0,'fincantieri.png',''),(7,'Veronesi','Alimentazione','San Martino Buon Albergo','',0,'veronesi.png',''),(8,'Zambon group','Farmaceutico','Verona','',0,'zambon_group.png',''),(9,'Todesco','Chimico','Caldiero','',0,'todesco.png',''),(10,'Cattolica Assicurazioni','Assicurazioni','Verona','',0,'cattolica_assicurazioni.png',''),(11,'Technogym','Fitness','Verona','',0,'technogym.png',''),(12,'Zalando','Moda','Nogarole Rocca','',0,'zalando.png',''),(13,'AIA','Alimentare','San Martino Buon Albergo','',0,'aia.png',''),(14,'Mondadori','Editoria','Verona','',0,'mondadori.png',''),(15,'Pastificio Rana','Alimentare','San Giovanni Lupatoto','',0,'pastificio_rana.png','');
 /*!40000 ALTER TABLE `azienda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,13 +115,13 @@ DROP TABLE IF EXISTS `recensione`;
 CREATE TABLE `recensione` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `testo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `salario` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `sicurezza_sul_lavoro` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `benessere_mentale` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `orario_flessibile` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `rapporto_interpersonale` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `crescita_personale` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `benefit_aziendali` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `salario` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `orario_flessibile` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `benefit_aziendali` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `sicurezza_sul_lavoro` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `benessere_mentale` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `rapporto_interpersonale` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `crescita_personale` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `id_azienda` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_recensione_azienda` (`id_azienda`),
@@ -135,7 +135,7 @@ CREATE TABLE `recensione` (
 
 LOCK TABLES `recensione` WRITE;
 /*!40000 ALTER TABLE `recensione` DISABLE KEYS */;
-INSERT INTO `recensione` VALUES (1,'Non la consiglio','5','3','2','2','4','3','3',1),(2,'Sono molto contento di lavorare qui','4','6','6','5','6','6','4',3),(3,'Il lavoro è molto semplice, i colleghi ti aiutano nei momenti di bisogno','4','5','5','5','6','4','1',2),(4,'Lavoro pesante, colleghi fantastici,orari poco flessibili','6','1','1','3','6','2','4',1);
+INSERT INTO `recensione` VALUES (1,'Non la consiglio','5','2','3','3','2','4','3',1),(2,'Sono molto contento di lavorare qui','4','5','4','5','5','5','5',3),(3,'Il lavoro è molto semplice, i colleghi ti aiutano nei momenti di bisogno','4','5','1','5','5','3','4',2),(4,'Lavoro pesante, colleghi fantastici,orari poco flessibili','4','3','4','1','1','4','2',1);
 /*!40000 ALTER TABLE `recensione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 11:27:38
+-- Dump completed on 2024-10-01 14:24:47

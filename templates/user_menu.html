@@ -19,7 +19,7 @@
         </a>
     </div>
 
-    <div class="search-container col-lg-8 col-sm-10 mx-auto">
+    <div class="search-container col-lg-8 col-10 mx-auto">
         <form action="{{ url_for('user_menu') }}" method="POST">
             <div class="input-container">
                 <img src="{{ url_for('static', filename='resources/icons/search-icon.png') }}" alt="Search" class="search-icon">
@@ -41,7 +41,7 @@
         {% endif %}
     {% endwith %}
 
-    <div class="aziende-container col-10 mx-auto">
+    <div class="aziende-container col-lg-8 col-10 mx-auto">
         {% if aziende %}
             {% for azienda in aziende %}
                 <a href="{{ url_for('azienda_details', azienda_id=azienda[0]) }}" class="card-azienda-link">

@@ -25,38 +25,35 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
-    password = request.form['password']
+    password = request.form['password'].encode('utf-8')  # Converti la password in bytes per bcrypt
 
     conn = connect_to_db()
     cur = conn.cursor()
 
+    # 1. Verifica per 'admin' nella tabella dipendente
     if username == 'admin':
-        cur.execute("SELECT password FROM utente WHERE username = %s", (username,))
+        cur.execute("SELECT password FROM dipendente WHERE username = %s", (username,))
         admin = cur.fetchone()
-        if admin and bcrypt.checkpw(password.encode('utf-8'), admin[0].encode('utf-8')):
+        if admin and bcrypt.checkpw(password, admin[0].encode('utf-8')):
             session['username'] = username
             return redirect(url_for('admin_menu'))
 
-    # Verifica per altri utenti dal database
-    password = password.encode('utf-8')  # Converti la password in bytes per bcrypt
-    query = """
-    (SELECT password FROM utente WHERE username = %s)
-    UNION
-    (SELECT password FROM dipendente WHERE username = %s)
-    """
-    cur.execute(query, (username, username))
-    user = cur.fetchone()
+    # 2. Verifica per utenti nella tabella 'utente'
+    cur.execute("SELECT password FROM utente WHERE username = %s", (username,))
+    utente = cur.fetchone()
+    if utente and bcrypt.checkpw(password, utente[0].encode('utf-8')):
+        session['username'] = username
+        return redirect(url_for('user_menu'))
 
-    # Controllo credenziali nel database
-    if user:
-        if bcrypt.checkpw(password, user[0].encode('utf-8')):  # user[0] è la colonna password
-            session['username'] = username
-            return redirect(url_for('user_menu'))
-        else:
-            flash('Password errata. Riprova.', 'danger')
-    else:
-        flash('Username non trovato. Riprova.', 'danger')
+    # 3. Verifica per dipendenti nella tabella 'dipendente'
+    cur.execute("SELECT password FROM dipendente WHERE username = %s", (username,))
+    dipendente = cur.fetchone()
+    if dipendente and bcrypt.checkpw(password, dipendente[0].encode('utf-8')):
+        session['username'] = username
+        return redirect(url_for('dipendente_menu'))
 
+    # Se nessuna corrispondenza, ritorna alla pagina di login con un messaggio di errore
+    flash('Username o password non corretti. Riprova.', 'danger')
     cur.close()
     conn.close()
     return redirect(url_for('home'))
@@ -169,6 +166,58 @@ def azienda_details(azienda_id):
 
     # Passa i dettagli dell'azienda alla pagina azienda.html
     return render_template('azienda.html', azienda=azienda)
+
+# Menu dipendente
+@app.route('/dipendente_menu', methods=['GET', 'POST'])
+def dipendente_menu():
+    if 'username' in session:
+        conn = connect_to_db()
+        cur = conn.cursor()
+
+        # Ottieni l'azienda collegata al dipendente
+        cur.execute("""
+            SELECT a.id, a.nome, a.immagine
+            FROM dipendente d
+            JOIN azienda a ON d.azienda_id = a.id
+            WHERE d.username = %s
+        """, (session['username'],))
+        azienda = cur.fetchone()
+
+        if request.method == 'POST':
+            # Recupera i dati inseriti nel form
+            recensione = request.form.get('recensione')
+            salario = request.form.get('salario')
+            sicurezza_sul_lavoro = request.form.get('sicurezza_sul_lavoro')
+            benessere_mentale = request.form.get('benessere_mentale')
+            orario_flessibile = request.form.get('orari_flessibili')
+            rapporto_interpersonale = request.form.get('rapporti-interpersonali')
+            crescita_personale = request.form.get('crescita_personale')
+            benefit_aziendali = request.form.get('benefit-aziendali')
+
+            # Inserisci la recensione nella tabella 'recensione'
+            cur.execute("""
+                INSERT INTO recensione 
+                (testo, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_personale, benefit_aziendali, id_azienda)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_personale, benefit_aziendali, azienda[0]))
+            
+            # Ottieni l'ID della recensione appena inserita
+            recensione_id = cur.lastrowid
+
+            # Inserisci l'associazione tra dipendente e recensione
+            cur.execute("""
+                INSERT INTO dipendente_recensione (id_dipendente, id_recensione)
+                VALUES ((SELECT id FROM dipendente WHERE username = %s), %s)
+            """, (session['username'], recensione_id))
+
+            conn.commit()
+            flash('Recensione inviata con successo!', 'success')
+
+        cur.close()
+        conn.close()
+        return render_template('dipendente_menu.html', azienda=azienda)
+    else:
+        return redirect(url_for('home'))
 
 # Menu admin
 @app.route('/admin_menu')
