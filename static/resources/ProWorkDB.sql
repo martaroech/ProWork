@@ -27,8 +27,12 @@ CREATE TABLE `azienda` (
   `nome` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
   `settore` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
   `localita` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
+  `descrizione` varchar(500) COLLATE utf8mb4_swedish_ci NOT NULL,
+  `valutazione` double NOT NULL,
+  `immagine` varchar(300) COLLATE utf8mb4_swedish_ci NOT NULL,
+  `indirizzo` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +41,7 @@ CREATE TABLE `azienda` (
 
 LOCK TABLES `azienda` WRITE;
 /*!40000 ALTER TABLE `azienda` DISABLE KEYS */;
-INSERT INTO `azienda` VALUES (1,'Innova Group','Cartotecnico','Erbe\''),(2,'MOA Sport','Moda','Castel d\'Ario'),(3,'Fondazione EduLife','Istruzione','Verona'),(4,'ProWork','Software House','Verona');
+INSERT INTO `azienda` VALUES (1,'Innova Group','Cartotecnico','Erbè','Innova Group, situata a Erbè (VR), è un\'azienda leader nel packaging e nella cartotecnica. Offre soluzioni innovative e sostenibili, grazie a tecnologie avanzate e alla digitalizzazione dei processi, con un forte focus sull\'innovazione in ottica Industry 4.0.',3.9,'innova_group.png','Via della Libertà 6 – 37060 Erbè (VR)'),(2,'MOA Sport','Moda','Castel d\'Ario','',0,'moa.png',''),(3,'Fondazione EduLife','Istruzione','Verona','',0,'fondazione_edulife.png',''),(4,'Calzedonia','Abbigliamento','Dossobuono','',0,'calzedonia.png',''),(5,'Bauli','Alimentazione','Castel d\'Azzano','',0,'bauli.png',''),(6,'Fincantieri','Ingegneria','Valeggio sul Mincio','',0,'fincantieri.png',''),(7,'Veronesi','Alimentazione','San Martino Buon Albergo','',0,'veronesi.png',''),(8,'Zambon group','Farmaceutico','Verona','',0,'zambon_group.png',''),(9,'Todesco','Chimico','Caldiero','',0,'todesco.png',''),(10,'Gruppo Cattolica Assicurazioni','Assicurazioni','Verona','',0,'cattolica_assicurazioni.png',''),(11,'Technogym','Fitness','Verona','',0,'technogym.png',''),(12,'Zalando','Moda','Nogarole Rocca','',0,'zalando.png',''),(13,'AIA','Alimentare','San Martino Buon Albergo','',0,'aia.png',''),(14,'Mondadori','Editoria','Verona','',0,'mondadori.png',''),(15,'Pastificio Rana','Alimentare','San Giovanni Lupatoto','',0,'pastificio_rana.png','');
 /*!40000 ALTER TABLE `azienda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,12 +54,12 @@ DROP TABLE IF EXISTS `dipendente`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dipendente` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8mb4_swedish_ci NOT NULL,
-  `ruolo` varchar(200) COLLATE utf8mb4_swedish_ci DEFAULT NULL,
+  `username` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `ruolo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
   `eta` int unsigned NOT NULL,
-  `anni_servizio` enum('Meno di un anno','Da 1 a 4 anni','Da 5 a 10 anni','Da più di 10 anni') COLLATE utf8mb4_swedish_ci DEFAULT NULL,
-  `genere` enum('M','F','Preferisco non specificarlo') COLLATE utf8mb4_swedish_ci DEFAULT NULL,
+  `anni_servizio` enum('Meno di un anno','Da 1 a 4 anni','Da 5 a 10 anni','Da più di 10 anni') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
+  `genere` enum('M','F','Preferisco non specificarlo') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
   `azienda_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_azienda` (`azienda_id`),
@@ -110,14 +114,14 @@ DROP TABLE IF EXISTS `recensione`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recensione` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `testo` varchar(500) COLLATE utf8mb4_swedish_ci NOT NULL,
-  `salario` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
-  `sicurezza_sul_lavoro` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
-  `benessere_mentale` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
-  `orario_flessibile` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
-  `rapporto_interpersonale` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
-  `crescita_personale` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
-  `benefit_aziendali` enum('1','2','3','4','5','6') COLLATE utf8mb4_swedish_ci NOT NULL,
+  `testo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `salario` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `sicurezza_sul_lavoro` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `benessere_mentale` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `orario_flessibile` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `rapporto_interpersonale` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `crescita_personale` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `benefit_aziendali` enum('1','2','3','4','5','6') CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `id_azienda` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_recensione_azienda` (`id_azienda`),
@@ -144,8 +148,8 @@ DROP TABLE IF EXISTS `utente`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `utente` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
-  `password` varchar(200) COLLATE utf8mb4_swedish_ci NOT NULL,
+  `username` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `eta` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
@@ -157,7 +161,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES (1,'MarioRossi','MarioRossi',20),(2,'LuigiVerdi','LuigiVerdi',21),(3,'MariaGialli','MariaGialli',18);
+INSERT INTO `utente` VALUES (1,'MarioRossi','$2b$12$Ukzxh/xs6HKkg0ShvaiIgeOqV5YBjXAnNJLd2NQSuqT6VdadaVov6',20),(2,'LuigiVerdi','$2b$12$PJMo/ku71I3LaVfjHbZqqO0Ot2Cr9QECQpWpGVlMlQ8JvyJBhvjcW',21),(3,'MariaGialli','$2b$12$ZecZbPUR6G0Fe5uYm5oN6OLVP0v.5JBsCwp0icTe3wBvjF2qR6aka',18);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-21 12:25:54
+-- Dump completed on 2024-10-01 11:27:38
