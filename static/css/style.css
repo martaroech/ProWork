@@ -12,7 +12,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 2rem;
-    width: 400px;
     margin: 2rem auto;
 }
 
@@ -291,11 +290,28 @@ h2 {
 /*****************************************/
 
 
+.container-info-azienda {
+    padding: 0 !important;
+    width: 100%;
+}
+
+.img-container-azienda {
+    display: flex;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center;
+    justify-content: left;
+}
+
+.valutazione-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .azienda_img {
-    width: 300px;
-    max-width: none;
-    max-height: none;
-    margin-bottom: 40px;
+    width: 85%;
+    height: auto;
+    object-fit: contain;
 }
 
 .azienda-titolo {
@@ -314,8 +330,12 @@ h2 {
 
 
 .azienda_img_dip {
-    width: 100%;
-    max-width: 300px;
+    min-width: 100px;
+    min-height: 100px;
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    max-height: 200px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 40px;

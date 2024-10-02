@@ -13,23 +13,41 @@
 </head>
 <body>
     <div class="header">
+        {% if not is_dipendente %}
         <a href="{{ url_for('user_menu') }}" class="back-link">
             <button class="back-button"><img src="{{ url_for('static', filename='resources/icons/back-icon.png') }}" alt="Indietro" class="back-icon"></button>
         </a>
+        {% endif %}
         <img src="{{ url_for('static', filename='resources/ProWork.png') }}" alt="Logo" style="width: 200px;">
         <a href="{{ url_for('logout') }}" class="logout-link">
-            <button class="logout-button"><img src="{{ url_for('static', filename='resources/icons/logout-icon.png') }}" alt="Logout" class="logout-icon"></button>
+            <button class="logout-button"><img src="{{ url_for('static', filename='resources/icons/logout-icon.png') }}" alt="Logout" class="logout-icon">
+            </button>
         </a>
     </div>
 
     <div class="azienda-dettagli-container col-9 mx-auto">
-        <div class="img-container" style="width: 100%;">
-            <img src="{{ url_for('static', filename='resources/' + (azienda[6] if azienda[6] else 'default-img.webp')) }}" alt="img_azienda" class="azienda_img">
+        <div class="container-fluid container-info-azienda col-12 mx-auto">
+            <div class="row mx-auto">
+                <div class="img-container-azienda col-5">
+                    <img src="{{ url_for('static', filename='resources/' + (azienda[6] if azienda[6] else 'default-img.webp')) }}" alt="img_azienda" class="azienda_img">
+                </div>
+                <div class="valutazione-container col-7">
+                    <h3 class="azienda-titolo"><strong>{{ azienda[1] }}</strong></h3>
+    
+                </div>
+            </div>
         </div>
-        <h1 class="azienda-titolo"><strong>{{ azienda[1] }}</strong></h1>
         <div class="azienda-descrizione">{{ azienda[4] }}</div>
-        <div class="azienda-indirizzo"><strong>Indirizzo: </strong>{{ azienda[2] }}</div>
+        <div class="azienda-settore"><strong>Settore: </strong>{{ azienda[2] }}</div>
+        <div class="azienda-indirizzo"><strong>Indirizzo: </strong>{{ azienda[7] }}</div>
         <div class="azienda-localita"><strong>Località: </strong>{{ azienda[3] }}</div>
+        <button class="btn col-md-3 col-sm-7 col-12 mt-3" style="background-color: #20b2aa; color: white; font-size: 1.1rem;" onclick="window.open('{{ azienda[8] }}', '_blank');">
+            <strong>CONTATTACI</strong>
+        </button>        
+    </div>
+
+    <div class="azienda-recensioni-container col-9 mx-auto mt-5">
+        <h2 class="azienda-recensioni-titolo"><strong>Recensioni</strong></h2>
     </div>
 
 <!-- Bootstrap JS -->

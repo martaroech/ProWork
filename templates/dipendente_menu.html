@@ -21,11 +21,11 @@
         </a>
     </div>
 
-    <div class="container-fluid col-lg-8 col-10 mb-5">
+    <div id="form-container" class="container-fluid col-lg-8 col-10 mb-5">
         <h3 class="text-center" style="color: #20b2aa;">Scrivi una recensione per<br> <strong>{{ azienda[1] }}</strong></h3>
         <img src="{{ url_for('static', filename='resources/' + (azienda[2] if azienda[2] else 'default-img.webp')) }}" class="azienda_img_dip d-flex justify-content-center">
         
-        <form action="{{ url_for('dipendente_menu') }}" method="POST" class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+        <form id="recensioneForm" action="{{ url_for('dipendente_menu') }}" method="POST" class="col-lg-8 col-md-10 col-sm-12 mx-auto">
             <div class="mb-3">
                 <label for="recensione" class="form-label" style="color: #1e9e94;">La tua recensione</label>
                 <textarea class="form-control" id="recensione" name="recensione" rows="4" placeholder="Scrivi la tua recensione..." required></textarea>
@@ -116,7 +116,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn col-md-4 offset-md-8 col-sm-7 offset-sm-5 col-12" style="background-color: #20b2aa; color: white;">INVIA RECENSIONE</button>
+            <button type="submit" class="btn col-md-4 offset-md-8 col-sm-7 offset-sm-5 col-12" style="background-color: #20b2aa; color: white; font-size: 1.1rem;"><strong>INVIA RECENSIONE</strong></button>
         </form>
     </div>
 
@@ -133,7 +133,26 @@
         {% endif %}
     {% endwith %}
     
+    <!-- Contenitore nascosto con messaggio di ringraziamento -->
+    <div id="thank-you-container" class="container-fluid col-lg-8 col-10 mb-5 text-center" style="display: none;">
+        <h2 style="color: #20b2aa;">Grazie per la tua recensione!</h2>
+        <p>La tua recensione è stata inviata con successo.</p>
+        <button class="btn col-md-4 col-12 mt-3" style="background-color: #20b2aa; color: white;" onclick="window.location.href='{{ url_for('azienda_details', azienda_id=azienda[0]) }}';">
+            <strong>Vai alla pagina dell'azienda</strong>
+        </button>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS personalizzato -->
+    <script>
+        // Questo script nasconde il form e mostra il messaggio di ringraziamento
+        document.getElementById('recensioneForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Impedisce l'invio del form per esempio
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('thank-you-container').style.display = 'block';
+        });
+    </script>
 </body>
 </html>

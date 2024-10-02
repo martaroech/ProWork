@@ -149,12 +149,16 @@ def azienda_details(azienda_id):
 
     # Recupera i dettagli dell'azienda basati sull'id
     query = """
-    SELECT id, nome, settore, localita, descrizione, valutazione, immagine, indirizzo
+    SELECT id, nome, settore, localita, descrizione, valutazione, immagine, indirizzo, link
     FROM azienda
     WHERE id = %s
     """
     cur.execute(query, (azienda_id,))
     azienda = cur.fetchone()
+
+    # Verifica se l'utente in sessione è un dipendente
+    cur.execute("SELECT id FROM dipendente WHERE username = %s", (session['username'],))
+    dipendente = cur.fetchone()
 
     cur.close()
     conn.close()
@@ -164,8 +168,8 @@ def azienda_details(azienda_id):
         flash("Azienda non trovata.", "danger")
         return redirect(url_for('user_menu'))
 
-    # Passa i dettagli dell'azienda alla pagina azienda.html
-    return render_template('azienda.html', azienda=azienda)
+    # Passa un flag al template per nascondere l'icona di back
+    return render_template('azienda.html', azienda=azienda, is_dipendente=bool(dipendente))
 
 # Menu dipendente
 @app.route('/dipendente_menu', methods=['GET', 'POST'])
