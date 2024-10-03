@@ -148,6 +148,8 @@ def azienda_details(azienda_id):
     conn = connect_to_db()
     cur = conn.cursor()
 
+    # SELECT AVG(AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale)) as media_di_medie,          AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale) FROM proworkdb.recensione WHERE id_azienda = 2;
+
     # Recupera i dettagli dell'azienda
     query_azienda = """
     SELECT id, nome, settore, localita, descrizione, valutazione, immagine, indirizzo, link
@@ -170,6 +172,17 @@ def azienda_details(azienda_id):
     cur.execute(query_recensioni, (azienda_id,))
     recensioni = cur.fetchall()
 
+    # Calcola la media delle valutazioni
+    query_media = """
+    SELECT AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale)
+    FROM proworkdb.recensione
+    WHERE id_azienda = %s;
+    """
+    cur.execute(query_media, (azienda_id,))
+    res_medie = cur.fetchone()
+    avg = round(sum(res_medie) / len(res_medie),1)
+    print(avg)
+
     cur.close()
     conn.close()
 
@@ -177,7 +190,7 @@ def azienda_details(azienda_id):
         flash("Azienda non trovata.", "danger")
         return redirect(url_for('user_menu'))
 
-    return render_template('azienda.html', azienda=azienda, recensioni=recensioni)
+    return render_template('azienda.html', azienda=azienda, recensioni=recensioni, res_media=res_medie)
 
 # Menu dipendente
 @app.route('/dipendente_menu', methods=['GET', 'POST'])

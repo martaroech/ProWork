@@ -64,11 +64,24 @@
 
     <div class="azienda-recensioni-container col-lg-6 col-10 mx-auto mt-5">
         <h2 class="azienda-recensioni-titolo"><strong>Recensioni</strong></h2>
-        <div class="row mt-2 mx-auto" style="width: 100%; justify-content: center; text-align: center;">
-            Scopri cosa pensano i dipendenti di quest'azienda
-        </div>
-    
+        
         {% if recensioni %}
+            <div class="row mt-2 mx-auto" style="width: 100%; justify-content: center; text-align: center;">
+                Scopri cosa pensano i dipendenti di quest'azienda
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 container-medie p-3" style="background-color: #f9f9f9; border-radius: 10px;">
+                    <div style="text-align: center;">
+                        <h5 class="azienda-recensioni-titolo"><strong class="strong-azienda">Medie valutazioni</strong></h5>
+                    </div>
+                    <div class="mb-2"><strong class="strong-azienda">Salario:</strong> {{ res_media[0] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Orario Flessibile:</strong> {{ res_media[1] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Benefit Aziendali:</strong> {{ res_media[2] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Sicurezza sul Lavoro:</strong> {{ res_media[3] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Benessere Mentale:</strong> {{ res_media[4] }}/5</div>
+                    <div><strong class="strong-azienda">Rapporti Interpersonali:</strong> {{ res_media[5] }}/5</div>
+                </div>
+            </div>
             <div class="row mt-3">
                 {% for recensione in recensioni %}
                 <div class="container-valutazioni mt-3 p-3" style="background-color: #f9f9f9; border-radius: 10px;">
