@@ -289,6 +289,16 @@ h2 {
 
 /*****************************************/
 
+.strong-azienda {
+    color: #20b2aa;
+}
+
+.azienda-dettagli-container, .azienda-recensioni-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
 
 .container-info-azienda {
     padding: 0 !important;
@@ -298,14 +308,50 @@ h2 {
 .img-container-azienda {
     display: flex;
     padding: 0 !important;
-    margin: 0 !important;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
 }
 
 .valutazione-container {
-    padding: 0 !important;
-    margin: 0 !important;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: auto;
+}
+
+.valutazione {
+    font-size: 1.2rem;
+    color: #1e9e94;
+    margin-right: 10px;
+}
+
+.star-rating {
+    display: flex; /* Usa flex per allineare */
+    align-items: baseline;
+    color: #e2e2e2;
+    position: relative;
+}
+
+.stars-outer {
+    position: relative;
+    display: flex;
+    font-size: 2rem;
+    align-items: baseline;
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    color: #20b2aa;
+    overflow: hidden;
+    align-items: baseline;
+}
+
+.stars-outer::before,
+.stars-inner::before {
+    content: "\2605\2605\2605\2605\2605";
 }
 
 .azienda_img {

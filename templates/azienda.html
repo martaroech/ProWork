@@ -25,32 +25,95 @@
         </a>
     </div>
 
-    <div class="azienda-dettagli-container col-9 mx-auto">
-        <div class="container-fluid container-info-azienda col-12 mx-auto">
-            <div class="row mx-auto">
-                <div class="img-container-azienda col-5">
+    <div class="azienda-dettagli-container col-lg-6 col-10 mx-auto">
+        <div class="container-fluid container-info-azienda col-12 mx-auto mb-3">
+            <h3 class="azienda-titolo"><strong>{{ azienda[1] }}</strong></h3>
+            <div class="row mx-auto mt-2">
+                <div class="img-container-azienda col-7 mx-auto">
                     <img src="{{ url_for('static', filename='resources/' + (azienda[6] if azienda[6] else 'default-img.webp')) }}" alt="img_azienda" class="azienda_img">
                 </div>
-                <div class="valutazione-container col-7">
-                    <h3 class="azienda-titolo"><strong>{{ azienda[1] }}</strong></h3>
-    
+            </div>
+            <div class="row mx-auto mt-2">
+                <div class="valutazione-container col-7 d-flex">
+                    <div class="valutazione" style="margin-right: 10px;"><strong>{{ azienda[5] }}</strong></div>
+                    <div class="star-rating" data-rating="{{ azienda[5] }}">
+                        <div class="stars-outer">
+                            <div class="stars-inner"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="azienda-descrizione">{{ azienda[4] }}</div>
-        <div class="azienda-settore"><strong>Settore: </strong>{{ azienda[2] }}</div>
-        <div class="azienda-indirizzo"><strong>Indirizzo: </strong>{{ azienda[7] }}</div>
-        <div class="azienda-localita"><strong>Località: </strong>{{ azienda[3] }}</div>
-        <button class="btn col-md-3 col-sm-7 col-12 mt-3" style="background-color: #20b2aa; color: white; font-size: 1.1rem;" onclick="window.open('{{ azienda[8] }}', '_blank');">
+        <div class="row">
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                <div><strong class="strong-azienda">Settore: </strong></div>
+                <div style="text-align: right;">{{ azienda[2] }}</div>
+            </div>
+        </div>
+        <div class="row" style="display: flex; flex-direction: row; justify-content: space-between;">
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                <div><strong class="strong-azienda">Indirizzo: </strong></div>
+                <div style="text-align: right;">{{ azienda[7] }}</div>
+            </div>
+        </div>
+        <button class="btn col-md-4 col-sm-7 col-12 mt-3" style="background-color: #20b2aa; color: white; font-size: 1.1rem;" onclick="window.open('{{ azienda[8] }}', '_blank');">
             <strong>CONTATTACI</strong>
-        </button>        
+        </button>
     </div>
 
-    <div class="azienda-recensioni-container col-9 mx-auto mt-5">
+    <div class="azienda-recensioni-container col-lg-6 col-10 mx-auto mt-5">
         <h2 class="azienda-recensioni-titolo"><strong>Recensioni</strong></h2>
+        <div class="row mt-2 mx-auto" style="width: 100%; justify-content: center; text-align: center;">
+            Scopri cosa pensano i dipendenti di quest'azienda
+        </div>
+    
+        {% if recensioni %}
+            <div class="row mt-3">
+                {% for recensione in recensioni %}
+                <div class="container-valutazioni mt-3 p-3" style="background-color: #f9f9f9; border-radius: 10px;">
+                    <div class="generalita-dipendente mb-3">
+                        <strong class="strong-azienda">Dipendente:</strong>
+                        <div class="dipendente-info mb-2" style="font-size: 0.9rem;">
+                            <div><strong>Ruolo:</strong> {{ recensione[8] }}</div>
+                            <div><strong>Età:</strong> {{ recensione[9] }}</div>
+                            <div><strong>Anni di servizio:</strong> {{ recensione[10] }}</div>
+                            <div><strong>Genere:</strong> {{ recensione[11] }}</div>
+                        </div>
+                    </div>
+                    <div class="mb-2"><strong class="strong-azienda">Recensione:</strong> {{ recensione[0] }}</div>
+                    <div class="mb-2"><strong class="strong-azienda">Salario:</strong> {{ recensione[1] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Orario Flessibile:</strong> {{ recensione[2] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Benefit Aziendali:</strong> {{ recensione[3] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Sicurezza sul Lavoro:</strong> {{ recensione[4] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Benessere Mentale:</strong> {{ recensione[5] }}/5</div>
+                    <div class="mb-2"><strong class="strong-azienda">Rapporti Interpersonali:</strong> {{ recensione[6] }}/5</div>
+                    <div style="margin-bottom: 0 !important;"><strong class="strong-azienda">Crescita Professionale:</strong> {{ recensione[7] }}/5</div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="row mt-3">
+                <p>Non ci sono recensioni disponibili per questa azienda.</p>
+            </div>
+        {% endif %}
     </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const starRating = document.querySelector('.star-rating');
+        const rating = parseFloat(starRating.getAttribute('data-rating'));
+        const starsInner = starRating.querySelector('.stars-inner');
+        
+        // Calcola la percentuale di stelle da colorare
+        const starPercentage = (rating / 5) * 100;
+        
+        // Imposta la larghezza delle stelle colorate
+        starsInner.style.width = `${starPercentage}%`;
+    });
+    </script>
 </body>
 </html>

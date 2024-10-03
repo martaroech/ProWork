@@ -141,35 +141,43 @@ def user_menu():
         return render_template('user_menu.html', username=session['username'], aziende=aziende)
     else:
         return redirect(url_for('home'))
-    
+
+# Vista azienda    
 @app.route('/azienda/<int:azienda_id>')
 def azienda_details(azienda_id):
     conn = connect_to_db()
     cur = conn.cursor()
 
-    # Recupera i dettagli dell'azienda basati sull'id
-    query = """
+    # Recupera i dettagli dell'azienda
+    query_azienda = """
     SELECT id, nome, settore, localita, descrizione, valutazione, immagine, indirizzo, link
     FROM azienda
     WHERE id = %s
     """
-    cur.execute(query, (azienda_id,))
+    cur.execute(query_azienda, (azienda_id,))
     azienda = cur.fetchone()
 
-    # Verifica se l'utente in sessione è un dipendente
-    cur.execute("SELECT id FROM dipendente WHERE username = %s", (session['username'],))
-    dipendente = cur.fetchone()
+    # Recupera le recensioni e le informazioni sui dipendenti
+    query_recensioni = """
+    SELECT r.testo, r.salario, r.orario_flessibile, r.benefit_aziendali, r.sicurezza_sul_lavoro, 
+           r.benessere_mentale, r.rapporto_interpersonale, r.crescita_professionale,
+           d.ruolo, d.eta, d.anni_servizio, d.genere
+    FROM recensione r
+    JOIN dipendente_recensione dr ON r.id = dr.id_recensione
+    JOIN dipendente d ON dr.id_dipendente = d.id
+    WHERE r.id_azienda = %s
+    """
+    cur.execute(query_recensioni, (azienda_id,))
+    recensioni = cur.fetchall()
 
     cur.close()
     conn.close()
 
-    # Se l'azienda non esiste, rimanda alla pagina principale con un messaggio di errore
     if not azienda:
         flash("Azienda non trovata.", "danger")
         return redirect(url_for('user_menu'))
 
-    # Passa un flag al template per nascondere l'icona di back
-    return render_template('azienda.html', azienda=azienda, is_dipendente=bool(dipendente))
+    return render_template('azienda.html', azienda=azienda, recensioni=recensioni)
 
 # Menu dipendente
 @app.route('/dipendente_menu', methods=['GET', 'POST'])

@@ -149,7 +149,7 @@
     <script>
         // Questo script nasconde il form e mostra il messaggio di ringraziamento
         document.getElementById('recensioneForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Impedisce l'invio del form per esempio
+            e.preventDefault();
             document.getElementById('form-container').style.display = 'none';
             document.getElementById('thank-you-container').style.display = 'block';
         });
