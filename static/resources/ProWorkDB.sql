@@ -20,6 +20,9 @@ DROP DATABASE IF EXISTS `proworkdb`;
 CREATE DATABASE IF NOT EXISTS `proworkdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci */;
 USE `proworkdb`;
 
+GRANT ALL PRIVILEGES ON proworkdb.* TO 'tuo_utente'@'localhost' IDENTIFIED BY 'tua_password';
+FLUSH PRIVILEGES;
+
 -- Dump della struttura di tabella proworkdb.azienda
 CREATE TABLE IF NOT EXISTS `azienda` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -73,7 +76,7 @@ INSERT IGNORE INTO `dipendente` (`id`, `username`, `password`, `ruolo`, `eta`, `
 	(2, 'Maureen', '$2b$12$nwHmRx9XJt5jHxo11U2YkekSoUlN6FEDfdbfL/Dy52md1sWKP30Qu', 'Responsabile Risorse Umane', 22, 'Da 1 a 4 anni', 'F', 1),
 	(3, 'Mattia', '$2b$12$GfMH6VxeEW67ZB5vxaffDuBQlmdBh7VdfqRPac2/8IbcJbPGRjx2e', 'Interlocutore di ChatGPT', 24, 'Da 5 a 10 anni', 'M', 2),
 	(4, 'Alessandro', '$2b$12$sG3onbZCsQw81KQPhtZ3vuJ.cYNxYDGWYXmRinrBiUVVePIT3CoMa', 'Project Manager', 21, 'Meno di un anno', 'M', 1),
-	(5, 'admin', '$2b$12$v5VfpNhhvEsVdo7yvQhJleeQHpT3BYyKR8x8iGXP9r5NyWECNhbcG', 'DIVINITA\'', 1404, 'Da più di 10 anni', 'Preferisco non specificarlo', 4),
+	(5, 'admin', '$2b$12$v5VfpNhhvEsVdo7yvQhJleeQHpT3BYyKR8x8iGXP9r5NyWECNhbcG', 'DIVINITÀ', 1404, 'Da più di 10 anni', 'Preferisco non specificarlo', 4),
 	(6, 'MarcoRossi', '$2b$12$i0rIoe1ysivhISmloO6VROElflAWz48Z9xr3QJeWLf2uD9AtjK.1i', 'Manager', 30, 'Da 1 a 4 anni', 'M', 11),
 	(7, 'GiuliaBianchi', '$2b$12$VSHrra7UCXPd.zSW7JuZ/OYNnSC6JyB1wR0MA5BS2BAVbNKat7MFW', 'Sviluppatore', 25, 'Meno di un anno', 'F', 14),
 	(8, 'LucaVerdi', '$2b$12$XfJxSk6w122raT5TvOD6o.M6piHXkH15mwVfh5OPSRW5Br5ca8QEK', 'Analista', 35, 'Da 5 a 10 anni', 'M', 7),

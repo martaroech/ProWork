@@ -45,8 +45,8 @@
             </div>
             <!-- Orari flessibili -->
             <div class="mb-3">
-                <label for="orari_flessibili" class="form-label" style="color: #1e9e94;">Orari flessibili</label>
-                <select class="form-select" id="orari_flessibili" name="orari_flessibili" required>
+                <label for="orario_flessibile" class="form-label" style="color: #1e9e94;">Orari flessibili</label>
+                <select class="form-select" id="orario_flessibile" name="orario_flessibile" required>
                     <option value="" disabled selected>Seleziona un'opzione</option>
                     <option value="1">1 - Pessimo</option>
                     <option value="2">2 - Scarso</option>
@@ -57,8 +57,8 @@
             </div>
             <!-- Benefit aziendali -->
             <div class="mb-3">
-                <label for="benefit-aziendali" class="form-label" style="color: #1e9e94;">Benefit aziendali</label>
-                <select class="form-select" id="benefit-aziendali" name="benefit-aziendali" required>
+                <label for="benefit_aziendali" class="form-label" style="color: #1e9e94;">Benefit aziendali</label>
+                <select class="form-select" id="benefit_aziendali" name="benefit_aziendali" required>
                     <option value="" disabled selected>Seleziona un'opzione</option>
                     <option value="1">1 - Pessimo</option>
                     <option value="2">2 - Scarso</option>
@@ -93,8 +93,8 @@
             </div>
             <!-- Rapporti interpersonali -->
             <div class="mb-3">
-                <label for="rapporti-interpersonali" class="form-label" style="color: #1e9e94;">Rapporti interpersonali</label>
-                <select class="form-select" id="rapporti-interpersonali" name="rapporti-interpersonali" required>
+                <label for="rapporto_interpersonale" class="form-label" style="color: #1e9e94;">Rapporti interpersonali</label>
+                <select class="form-select" id="rapporto_interpersonale" name="rapporto_interpersonale" required>
                     <option value="" disabled selected>Seleziona un'opzione</option>
                     <option value="1">1 - Pessimo</option>
                     <option value="2">2 - Scarso</option>
@@ -149,9 +149,30 @@
     <script>
         // Questo script nasconde il form e mostra il messaggio di ringraziamento
         document.getElementById('recensioneForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('thank-you-container').style.display = 'block';
+            e.preventDefault();  // Previene il comportamento predefinito di submit del form
+
+            // Raccogli i dati del form
+            let formData = new FormData(this);
+
+            // Invia i dati usando Fetch API
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Nascondi il form e mostra il messaggio di ringraziamento
+                    document.getElementById('form-container').style.display = 'none';
+                    document.getElementById('thank-you-container').style.display = 'block';
+                } else {
+                    // Gestisci eventuali errori (es. messaggio di errore)
+                    alert('Si è verificato un errore. Riprova più tardi.');
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella richiesta:', error);
+                alert('Errore nella connessione. Riprova più tardi.');
+            });
         });
     </script>
 </body>

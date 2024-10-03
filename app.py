@@ -199,46 +199,48 @@ def dipendente_menu():
             # Recupera i dati inseriti nel form
             recensione = request.form.get('recensione')
             salario = request.form.get('salario')
+            orario_flessibile = request.form.get('orario_flessibile')
+            benefit_aziendali = request.form.get('benefit_aziendali')
             sicurezza_sul_lavoro = request.form.get('sicurezza_sul_lavoro')
             benessere_mentale = request.form.get('benessere_mentale')
-            orario_flessibile = request.form.get('orari_flessibili')
-            rapporto_interpersonale = request.form.get('rapporti-interpersonali')
+            rapporto_interpersonale = request.form.get('rapporto_interpersonale')
             crescita_professionale = request.form.get('crescita_professionale')
-            benefit_aziendali = request.form.get('benefit-aziendali')
 
-            # Inserisci la recensione nella tabella 'recensione'
-            try:
-                if all([recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali]):
-                    try:
+            # Controlla se tutti i campi richiesti sono stati riempiti
+            if all([recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali]):
+                try:
+                    # Inserisci la recensione nella tabella 'recensione'
+                    cur.execute("""
+                        INSERT INTO recensione 
+                        (testo, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali, id_azienda)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """, (recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali, azienda[0]))
+                    conn.commit()
+
+                    # Ottieni l'ID della recensione appena inserita
+                    recensione_id = cur.lastrowid
+                    if recensione_id:
+                        # Inserisci l'associazione tra dipendente e recensione
                         cur.execute("""
-                            INSERT INTO recensione 
-                            (testo, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali, id_azienda)
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        """, (recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali, azienda[0]))
+                            INSERT INTO dipendente_recensione (id_dipendente, id_recensione)
+                            VALUES ((SELECT id FROM dipendente WHERE username = %s), %s)
+                        """, (session['username'], recensione_id))
                         conn.commit()
-                    except Exception as e:
-                        print(f"Errore SQL: {str(e)}")  # Stampa l'errore nel terminale
-                        flash(f"Errore durante l'invio della recensione: {str(e)}", "danger")
-                else:
-                    flash('Per favore, compila tutti i campi richiesti.', 'danger')
-            except Exception as e:
-                print(f"Errore SQL: {str(e)}")  # Stampa l'errore nel terminale
-                flash(f"Errore durante l'invio della recensione: {str(e)}", "danger")
-                        
-            # Ottieni l'ID della recensione appena inserita
-            recensione_id = cur.lastrowid
+                        flash('Recensione inviata con successo!', 'success')
+                    else:
+                        flash('Errore durante l\'inserimento della recensione.', 'danger')
 
-            # Inserisci l'associazione tra dipendente e recensione
-            cur.execute("""
-                INSERT INTO dipendente_recensione (id_dipendente, id_recensione)
-                VALUES ((SELECT id FROM dipendente WHERE username = %s), %s)
-            """, (session['username'], recensione_id))
+                except mysql.connector.Error as err:
+                    # Gestione degli errori SQL
+                    print(f"Errore SQL: {err}")  # Log dell'errore
+                    flash(f"Errore durante l'invio della recensione: {err}", "danger")
 
-            conn.commit()
-            flash('Recensione inviata con successo!', 'success')
+            else:
+                flash('Per favore, compila tutti i campi richiesti.', 'danger')
 
         cur.close()
         conn.close()
+
         return render_template('dipendente_menu.html', azienda=azienda)
     else:
         return redirect(url_for('home'))
