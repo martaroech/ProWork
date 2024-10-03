@@ -36,6 +36,7 @@ def login():
         admin = cur.fetchone()
         if admin and bcrypt.checkpw(password, admin[0].encode('utf-8')):
             session['username'] = username
+            session['user_type'] = 'dipendente'  # Admin è considerato un dipendente
             return redirect(url_for('admin_menu'))
 
     # 2. Verifica per utenti nella tabella 'utente'
@@ -43,6 +44,7 @@ def login():
     utente = cur.fetchone()
     if utente and bcrypt.checkpw(password, utente[0].encode('utf-8')):
         session['username'] = username
+        session['user_type'] = 'utente'  # Salva che è un utente
         return redirect(url_for('user_menu'))
 
     # 3. Verifica per dipendenti nella tabella 'dipendente'
@@ -50,6 +52,7 @@ def login():
     dipendente = cur.fetchone()
     if dipendente and bcrypt.checkpw(password, dipendente[0].encode('utf-8')):
         session['username'] = username
+        session['user_type'] = 'dipendente'  # Salva che è un dipendente
         return redirect(url_for('dipendente_menu'))
 
     # Se nessuna corrispondenza, ritorna alla pagina di login con un messaggio di errore
@@ -148,8 +151,6 @@ def azienda_details(azienda_id):
     conn = connect_to_db()
     cur = conn.cursor()
 
-    # SELECT AVG(AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale)) as media_di_medie,          AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale) FROM proworkdb.recensione WHERE id_azienda = 2;
-
     # Recupera i dettagli dell'azienda
     query_azienda = """
     SELECT id, nome, settore, localita, descrizione, valutazione, immagine, indirizzo, link
@@ -172,25 +173,32 @@ def azienda_details(azienda_id):
     cur.execute(query_recensioni, (azienda_id,))
     recensioni = cur.fetchall()
 
-    # Calcola la media delle valutazioni
+    # Calcola la media delle valutazioni, arrotondando ogni valore a 1 cifra decimale
     query_media = """
-    SELECT AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale)
+    SELECT ROUND(AVG(salario), 1), 
+        ROUND(AVG(orario_flessibile), 1), 
+        ROUND(AVG(benefit_aziendali), 1), 
+        ROUND(AVG(sicurezza_sul_lavoro), 1), 
+        ROUND(AVG(benessere_mentale), 1), 
+        ROUND(AVG(rapporto_interpersonale), 1), 
+        ROUND(AVG(crescita_professionale), 1)
     FROM proworkdb.recensione
     WHERE id_azienda = %s;
     """
     cur.execute(query_media, (azienda_id,))
     res_medie = cur.fetchone()
-    avg = round(sum(res_medie) / len(res_medie),1)
-    print(avg)
 
     cur.close()
     conn.close()
+
+    # Determina se l'utente è dipendente o meno
+    is_dipendente = session.get('user_type') == 'dipendente'
 
     if not azienda:
         flash("Azienda non trovata.", "danger")
         return redirect(url_for('user_menu'))
 
-    return render_template('azienda.html', azienda=azienda, recensioni=recensioni, res_media=res_medie)
+    return render_template('azienda.html', azienda=azienda, recensioni=recensioni, res_media=res_medie, is_dipendente=is_dipendente)
 
 # Menu dipendente
 @app.route('/dipendente_menu', methods=['GET', 'POST'])
@@ -239,7 +247,23 @@ def dipendente_menu():
                             VALUES ((SELECT id FROM dipendente WHERE username = %s), %s)
                         """, (session['username'], recensione_id))
                         conn.commit()
-                        flash('Recensione inviata con successo!', 'success')
+
+                        # Calcola le nuove medie per la valutazione complessiva
+                        cur.execute("""
+                            SELECT AVG (salario), AVG(orario_flessibile), AVG(benefit_aziendali), AVG(sicurezza_sul_lavoro), AVG(benessere_mentale), AVG(rapporto_interpersonale), AVG(crescita_professionale)
+                            FROM recensione
+                            WHERE id_azienda = %s;
+                        """, (azienda[0],))
+                        res_medie = cur.fetchone()
+                        nuova_media = round(sum(res_medie) / len(res_medie), 1)
+
+                        # Aggiorna la valutazione dell'azienda
+                        cur.execute("""
+                            UPDATE azienda
+                            SET valutazione = %s
+                            WHERE id = %s
+                        """, (nuova_media, azienda[0]))
+                        conn.commit()
                     else:
                         flash('Errore durante l\'inserimento della recensione.', 'danger')
 
