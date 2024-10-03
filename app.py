@@ -10,6 +10,7 @@ app.secret_key = os.getenv('SECRET_KEY', b'\xe6\x05\xe6q;[$\xcd\xe6\xa8n\xab\x1e
 def connect_to_db():
     return mysql.connector.connect(
         host='127.0.0.1',
+        port=3306,
         database='proworkdb',
         user='root',
         password='LucaMartari',
@@ -303,4 +304,4 @@ def logout():
 ###########################################################
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4000)
