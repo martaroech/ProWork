@@ -14,6 +14,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+DROP DATABASE IF EXISTS `proworkdb`;
 
 -- Dump della struttura del database proworkdb
 CREATE DATABASE IF NOT EXISTS `proworkdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci */;
@@ -191,38 +192,38 @@ CREATE TABLE IF NOT EXISTS `recensione` (
   CONSTRAINT `FK_recensione_azienda` FOREIGN KEY (`id_azienda`) REFERENCES `azienda` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
--- Dump dei dati della tabella proworkdb.recensione: ~50 rows (circa)
+-- Dump dei dati della tabella proworkdb.recensione: ~45 rows (circa)
 INSERT IGNORE INTO `recensione` (`id`, `testo`, `salario`, `orario_flessibile`, `benefit_aziendali`, `sicurezza_sul_lavoro`, `benessere_mentale`, `rapporto_interpersonale`, `crescita_professionale`, `id_azienda`) VALUES
 	(1, 'Non la consiglio', '5', '2', '3', '3', '2', '4', '3', 1),
-	(2, 'Sono molto contento di lavorare qui', '4', '5', '4', '6', '6', '6', '6', 3),
-	(3, 'Il lavoro è molto semplice, i colleghi ti aiutano nei momenti di bisogno', '4', '5', '1', '5', '5', '6', '4', 2),
-	(4, 'Lavoro pesante, colleghi fantastici,orari poco flessibili', '6', '3', '4', '1', '1', '6', '2', 1),
-	(5, 'Ottima azienda, ambiente di lavoro stimolante e buoni benefit.', '4', '6', '4', '5', '5', '5', '5', 1),
-	(7, 'Team affiatato, sempre pronti ad aiutarsi a vicenda.', '5', '6', '5', '4', '4', '5', '4', 2),
+	(2, 'Sono molto contento di lavorare qui', '4', '5', '4', '5', '5', '5', '5', 3),
+	(3, 'Il lavoro è molto semplice, i colleghi ti aiutano nei momenti di bisogno', '4', '5', '1', '5', '5', '5', '4', 2),
+	(4, 'Lavoro pesante, colleghi fantastici,orari poco flessibili', '5', '3', '4', '1', '1', '5', '2', 1),
+	(5, 'Ottima azienda, ambiente di lavoro stimolante e buoni benefit.', '4', '5', '4', '5', '5', '5', '5', 1),
+	(7, 'Team affiatato, sempre pronti ad aiutarsi a vicenda.', '5', '5', '5', '4', '4', '5', '4', 2),
 	(8, 'Azienda seria, ma gli stipendi potrebbero essere migliori.', '2', '2', '3', '4', '3', '4', '3', 2),
-	(9, 'Mi piace lavorare qui, l’orario flessibile è un grande vantaggio.', '5', '6', '5', '5', '4', '4', '5', 3),
+	(9, 'Mi piace lavorare qui, l’orario flessibile è un grande vantaggio.', '5', '5', '5', '5', '4', '4', '5', 3),
 	(10, 'Possibilità di apprendere molto, ma manca un piano di carriera chiaro.', '3', '4', '2', '3', '4', '4', '3', 3),
-	(11, 'Ottima gestione, ma i benefit potrebbero essere più vari.', '4', '6', '4', '5', '5', '5', '4', 4),
+	(11, 'Ottima gestione, ma i benefit potrebbero essere più vari.', '4', '5', '4', '5', '5', '5', '4', 4),
 	(12, 'Azienda innovativa, ma stressante nei periodi di scadenza.', '2', '2', '1', '4', '3', '3', '2', 4),
-	(13, 'Buon equilibrio tra vita privata e lavoro.', '5', '6', '5', '5', '5', '5', '5', 5),
+	(13, 'Buon equilibrio tra vita privata e lavoro.', '5', '5', '5', '5', '5', '5', '5', 5),
 	(14, 'Compenso adeguato e ambiente molto collaborativo.', '4', '4', '4', '4', '4', '4', '4', 5),
 	(15, 'Un’ottima esperienza, ma servirebbero più eventi di team building.', '3', '3', '3', '3', '2', '4', '3', 6),
 	(16, 'Alcune procedure potrebbero essere migliorate, ma complessivamente ok.', '3', '5', '2', '4', '4', '4', '3', 6),
-	(17, 'Colleghi fantastici, ci si sente come in famiglia.', '5', '6', '5', '5', '5', '5', '5', 7),
+	(17, 'Colleghi fantastici, ci si sente come in famiglia.', '5', '5', '5', '5', '5', '5', '5', 7),
 	(18, 'Stipendio nella media, ma l’ambiente è molto positivo.', '4', '2', '2', '3', '3', '3', '3', 7),
 	(19, 'Non c’è molta flessibilità negli orari, ma le ferie sono generose.', '2', '2', '3', '4', '4', '4', '3', 7),
-	(20, 'Le opportunità di formazione sono eccellenti.', '5', '6', '4', '5', '5', '5', '4', 8),
+	(20, 'Le opportunità di formazione sono eccellenti.', '5', '5', '4', '5', '5', '5', '4', 8),
 	(21, 'Azienda solida, ma mancano iniziative per il benessere dei dipendenti.', '3', '2', '2', '3', '3', '3', '2', 8),
-	(22, 'Mi sento molto motivato a lavorare qui, bellissimo ambiente.', '5', '6', '5', '5', '5', '5', '5', 9),
+	(22, 'Mi sento molto motivato a lavorare qui, bellissimo ambiente.', '5', '5', '5', '5', '5', '5', '5', 9),
 	(23, 'Possibilità di lavoro remoto, ma non sempre garantita.', '4', '4', '4', '4', '4', '4', '4', 9),
 	(24, 'Poche opportunità di avanzamento, ma l’azienda è affidabile.', '2', '2', '2', '3', '3', '3', '2', 10),
 	(25, 'La comunicazione interna potrebbe essere migliorata.', '3', '4', '3', '4', '3', '3', '3', 10),
-	(26, 'Ambiente di lavoro stimolante, molti progetti interessanti.', '5', '6', '5', '5', '5', '5', '5', 11),
+	(26, 'Ambiente di lavoro stimolante, molti progetti interessanti.', '5', '5', '5', '5', '5', '5', '5', 11),
 	(27, 'Occasionalmente stressante, ma nel complesso positivo.', '3', '3', '3', '4', '3', '3', '2', 11),
 	(28, 'Soddisfazione generale, ma si potrebbe fare di più per i dipendenti.', '4', '4', '4', '4', '4', '4', '4', 12),
 	(29, 'Compenso giusto, ma ci sono troppe ore di lavoro.', '2', '3', '2', '3', '2', '4', '2', 12),
 	(30, 'Bel posto dove lavorare, ma ci sono momenti di alta pressione.', '3', '2', '3', '4', '3', '3', '3', 13),
-	(31, 'Ottimo supporto da parte dei superiori.', '5', '6', '4', '5', '5', '5', '4', 13),
+	(31, 'Ottimo supporto da parte dei superiori.', '5', '5', '4', '5', '5', '5', '4', 13),
 	(32, 'Poche ore di straordinario, ma buoni benefit.', '4', '4', '4', '4', '4', '4', '4', 14),
 	(33, 'Compenso nella media, e l’ambiente è accogliente.', '3', '3', '3', '3', '3', '3', '2', 14),
 	(34, 'Un ambiente di lavoro molto competitivo.', '4', '2', '3', '4', '3', '3', '3', 15),

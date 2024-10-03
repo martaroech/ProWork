@@ -203,16 +203,28 @@ def dipendente_menu():
             benessere_mentale = request.form.get('benessere_mentale')
             orario_flessibile = request.form.get('orari_flessibili')
             rapporto_interpersonale = request.form.get('rapporti-interpersonali')
-            crescita_personale = request.form.get('crescita_personale')
+            crescita_professionale = request.form.get('crescita_professionale')
             benefit_aziendali = request.form.get('benefit-aziendali')
 
             # Inserisci la recensione nella tabella 'recensione'
-            cur.execute("""
-                INSERT INTO recensione 
-                (testo, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_personale, benefit_aziendali, id_azienda)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_personale, benefit_aziendali, azienda[0]))
-            
+            try:
+                if all([recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali]):
+                    try:
+                        cur.execute("""
+                            INSERT INTO recensione 
+                            (testo, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali, id_azienda)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        """, (recensione, salario, sicurezza_sul_lavoro, benessere_mentale, orario_flessibile, rapporto_interpersonale, crescita_professionale, benefit_aziendali, azienda[0]))
+                        conn.commit()
+                    except Exception as e:
+                        print(f"Errore SQL: {str(e)}")  # Stampa l'errore nel terminale
+                        flash(f"Errore durante l'invio della recensione: {str(e)}", "danger")
+                else:
+                    flash('Per favore, compila tutti i campi richiesti.', 'danger')
+            except Exception as e:
+                print(f"Errore SQL: {str(e)}")  # Stampa l'errore nel terminale
+                flash(f"Errore durante l'invio della recensione: {str(e)}", "danger")
+                        
             # Ottieni l'ID della recensione appena inserita
             recensione_id = cur.lastrowid
 
