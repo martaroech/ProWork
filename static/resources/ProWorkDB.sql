@@ -19,7 +19,10 @@
 -- Table structure for table `azienda`
 --
 
-DROP DATABASE IF EXISTS `proworkdb`;
+-- DROP DATABASE IF EXISTS `proworkdb`;
+
+-- CREATE DATABASE `proworkdb`;
+-- USE `proworkdb`;
 
 DROP TABLE IF EXISTS `azienda`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
