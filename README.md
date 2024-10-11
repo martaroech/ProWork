@@ -1,4 +1,4 @@
-# ProWork Platform
+# ProWork
 
 ## Descrizione
 **ProWork** è una piattaforma che consente ai dipendenti di condividere le loro esperienze lavorative in modo anonimo, fornendo recensioni sulle aziende in cui lavorano. Gli utenti possono visualizzare le recensioni e informazioni dettagliate su varie aziende, tra cui valutazioni su salario, orari flessibili, benefit aziendali, sicurezza sul lavoro, benessere mentale, rapporti interpersonali e crescita professionale.
