@@ -4,7 +4,6 @@ import mysql.connector
 import bcrypt
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', b'\xe6\x05\xe6q;[$\xcd\xe6\xa8n\xab\x1e2q\x13\xa2\x1fL\xd1\xd7O\xabr')
 
 # Connessione al database MySQL / MariaDB
 def connect_to_db():
@@ -12,8 +11,8 @@ def connect_to_db():
         host='127.0.0.1',
         port=3306,
         database='proworkdb',
-        user='root',
-        password='LucaMartari',
+        user='<user>',
+        password='<password>',
         charset='utf8mb4'
     )
 
